@@ -1,0 +1,212 @@
+/* Aerowave Airlines — help page */
+
+:root {
+  --navy: #14295b;
+  --navy-soft: #2a3d6b;
+  --blue: #2f6fd6;
+  --blue-dark: #2459b5;   /* links/text on gray backgrounds (AA on #f3f6fb) */
+  --blue-tint: #e8f0fc;
+  --text: #1f2a44;
+  --muted: #4f5b73;       /* 6.6:1 on white */
+  --line: #dde4ef;
+  --bg: #ffffff;
+  --bg-soft: #f3f6fb;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(20, 41, 91, .06), 0 8px 24px rgba(20, 41, 91, .07);
+  --focus: 0 0 0 3px #fff, 0 0 0 5px var(--blue);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { color: var(--navy); line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+svg { display: block; }
+
+a { color: var(--blue-dark); text-underline-offset: 3px; }
+a:hover { color: var(--navy); }
+
+:focus-visible { outline: none; box-shadow: var(--focus); border-radius: 6px; }
+
+.container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -48px; z-index: 20;
+  background: var(--navy); color: #fff; padding: 8px 14px; border-radius: 8px;
+  text-decoration: none; font-weight: 600;
+}
+.skip-link:focus { top: 12px; color: #fff; }
+
+/* ---------- Header ---------- */
+
+.site-header {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(255, 255, 255, .94);
+  backdrop-filter: saturate(1.4) blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 68px; }
+
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand-mark { width: 32px; height: 32px; flex: none; }
+.brand-name { font-size: 1.3rem; font-weight: 750; color: var(--navy); letter-spacing: -0.02em; }
+
+.site-nav ul { display: flex; list-style: none; gap: 4px; }
+.site-nav a {
+  display: block; padding: 8px 12px; border-radius: 8px;
+  color: var(--navy-soft); font-weight: 550; font-size: .95rem; text-decoration: none;
+}
+.site-nav a:hover { background: var(--bg-soft); color: var(--navy); }
+.site-nav a[aria-current="page"] { color: var(--navy); background: var(--blue-tint); }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 50px; padding: 0 24px; border: 0; border-radius: 10px;
+  font: inherit; font-weight: 650; font-size: 1rem; cursor: pointer;
+  transition: background-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.btn-primary { background: var(--blue); color: #fff; box-shadow: 0 2px 6px rgba(47, 111, 214, .28); }
+.btn-primary:hover { background: var(--blue-dark); }
+.btn-primary:active { transform: translateY(1px); }
+.btn-primary:focus-visible { box-shadow: var(--focus); border-radius: 10px; }
+.btn-icon { width: 20px; height: 20px; flex: none; }
+
+.text-link { font-weight: 600; color: var(--blue-dark); }
+
+/* ---------- Hero ---------- */
+
+.hero {
+  background:
+    radial-gradient(900px 400px at 85% 10%, var(--blue-tint), transparent 70%),
+    linear-gradient(180deg, #fff 0%, var(--bg-soft) 100%);
+  border-bottom: 1px solid var(--line);
+}
+.hero-inner {
+  display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 56px;
+  padding-top: 72px; padding-bottom: 80px;
+}
+.eyebrow {
+  font-size: .85rem; font-weight: 650; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--blue-dark); margin-bottom: 14px;
+}
+.hero h1 { font-size: clamp(2rem, 4.2vw, 3.1rem); font-weight: 750; letter-spacing: -0.025em; max-width: 16ch; }
+.lede { font-size: 1.15rem; color: var(--muted); margin-top: 18px; max-width: 46ch; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 32px; }
+.hero-note { margin-top: 18px; font-size: .9rem; color: var(--muted); }
+
+/* Plane-and-clouds illustration (decorative) */
+.hero-visual { max-width: 440px; justify-self: end; width: 100%; }
+.hero-visual svg { width: 100%; height: auto; }
+
+/* ---------- Sections ---------- */
+
+.section { padding: 80px 0; }
+.section-alt { background: var(--bg-soft); }
+.section-head { max-width: 640px; margin-bottom: 40px; }
+.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 720; }
+.section-head p { margin-top: 10px; color: var(--muted); font-size: 1.05rem; }
+
+/* Coverage cards */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; list-style: none; }
+.card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 28px; box-shadow: 0 1px 2px rgba(20, 41, 91, .04);
+}
+.card-icon {
+  display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px;
+  background: var(--blue-tint); color: var(--blue-dark); margin-bottom: 18px;
+}
+.card-icon svg { width: 24px; height: 24px; }
+.card h3 { font-size: 1.1rem; font-weight: 680; }
+.amount { font-size: 2.5rem; font-weight: 760; color: var(--navy); letter-spacing: -0.02em; line-height: 1.15; margin-top: 10px; }
+.amount-none { font-size: 1.6rem; color: var(--muted); padding: 6px 0 4px; }
+.card-text { margin-top: 10px; color: var(--muted); font-size: .95rem; }
+.card-muted { background: #fafbfd; }
+.card-muted .card-icon { background: #eceff4; color: var(--muted); }
+
+.fine-print { margin-top: 24px; font-size: .95rem; color: var(--muted); }
+
+/* Steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; list-style: none; counter-reset: none; }
+.step { position: relative; }
+.step-num {
+  display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--navy); color: #fff; font-weight: 700; margin-bottom: 18px;
+}
+.step h3 { font-size: 1.15rem; font-weight: 680; }
+.step p { margin-top: 8px; color: var(--muted); }
+.step:not(:last-child)::after {
+  content: ""; position: absolute; top: 20px; left: 56px; right: -16px;
+  border-top: 2px dashed #c9d6ec;
+}
+
+/* Check a claim */
+.status-panel {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap;
+  background: #fff; border: 1px solid var(--line); border-radius: 18px;
+  padding: 36px 40px; box-shadow: var(--shadow);
+}
+.status-panel h2 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); font-weight: 720; }
+.status-panel p { margin-top: 8px; color: var(--muted); font-size: 1.05rem; }
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  /* Extra bottom space keeps footer text clear of the chat launcher in the corner. */
+  padding: 40px 0 112px;
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+.footer-brand .brand-name { font-size: 1.1rem; }
+.disclaimer { margin-top: 6px; font-size: .9rem; color: var(--muted); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; }
+.footer-links a { color: var(--navy-soft); font-size: .95rem; text-decoration: none; }
+.footer-links a:hover { color: var(--navy); text-decoration: underline; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; padding-top: 48px; padding-bottom: 64px; }
+  .hero-visual { justify-self: center; max-width: 360px; }
+  .cards { grid-template-columns: 1fr; max-width: 520px; }
+  .steps { grid-template-columns: 1fr; gap: 28px; max-width: 520px; }
+  .step { padding-left: 60px; }
+  .step-num { position: absolute; left: 0; top: -6px; margin: 0; }
+  .step:not(:last-child)::after { top: 42px; bottom: -26px; left: 19px; right: auto; border-top: 0; border-left: 2px dashed #c9d6ec; }
+}
+
+@media (max-width: 720px) {
+  .header-inner { flex-direction: column; align-items: flex-start; gap: 4px; padding-top: 12px; padding-bottom: 8px; }
+  .site-nav { width: 100%; margin-left: -10px; }
+  .site-nav ul { flex-wrap: wrap; gap: 0; }
+  .site-nav a { padding: 6px 10px; font-size: .9rem; }
+  .site-header { position: static; }
+}
+
+@media (max-width: 560px) {
+  .container { padding-left: 16px; padding-right: 16px; }
+  .section { padding: 56px 0; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .text-link { text-align: center; }
+  .btn { width: 100%; }
+  .status-panel { padding: 28px 22px; }
+  .footer-inner { flex-direction: column; }
+}
