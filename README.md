@@ -10,7 +10,7 @@ The page is plain HTML, CSS, and vanilla JavaScript, with no framework and no bu
 | --- | --- |
 | `index.html` | The page, including a marked spot for the Salesforce Embedded Messaging snippet just before `</body>` |
 | `styles.css` | Light theme designed for screen recording, responsive down to mobile |
-| `script.js` | Wires the "Chat with Claims Concierge" buttons to the chat widget, plus a demo reset helper |
+| `script.js` | Wires the "Chat with Claims Concierge" buttons to the chat widget, plus demo helpers for starting a fresh chat |
 
 ## Run locally
 
@@ -27,7 +27,10 @@ Then open http://localhost:8000. The chat widget only loads when the page is ser
 
 The chat buttons open the widget once it has loaded. Before that they do nothing, and the widget's own launcher in the bottom-right corner still works.
 
-**Demo reset:** visit the page with `?reset` to clear this site's local and session storage, so the next recording starts with a fresh chat.
+**Starting a fresh chat:** the widget keeps its session in Salesforce's own storage as well as this site's, so clearing site data doesn't reset it. Use either of these instead:
+
+- Press **Alt+Shift+N** (**Option+Shift+N** on Mac) to end the current chat and open a new one right away. Click somewhere on the page first, because keys typed inside the chat window don't reach the page.
+- Visit the page with `?reset` to end any existing chat and load the page with the chat closed, ready for the next recording.
 
 ## Deploy
 
