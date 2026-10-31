@@ -74,6 +74,18 @@ a:hover { color: var(--navy); }
 }
 .site-nav a:hover { background: var(--bg-soft); color: var(--navy); }
 .site-nav a[aria-current="page"] { color: var(--navy); background: var(--blue-tint); }
+.site-nav { margin-left: auto; }
+
+.new-chat-btn {
+  display: inline-flex; align-items: center; gap: 6px; flex: none;
+  min-height: 38px; padding: 0 14px 0 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: #fff; color: var(--navy); font: inherit; font-weight: 600; font-size: .95rem; cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.new-chat-btn:hover { background: var(--bg-soft); border-color: #c9d6ec; }
+.new-chat-btn:focus-visible { border-radius: 8px; }
+.new-chat-btn[aria-busy="true"] { opacity: .6; cursor: progress; }
+.new-chat-btn .btn-icon { width: 18px; height: 18px; }
 
 /* ---------- Buttons ---------- */
 
@@ -198,7 +210,9 @@ a:hover { color: var(--navy); }
   .site-nav { width: 100%; margin-left: -10px; }
   .site-nav ul { flex-wrap: wrap; gap: 0; }
   .site-nav a { padding: 6px 10px; font-size: .9rem; }
-  .site-header { position: static; }
+  .site-nav { margin-left: -10px; }
+  .new-chat-btn { position: absolute; top: 12px; right: 16px; }
+  .site-header { position: relative; }
 }
 
 @media (max-width: 560px) {

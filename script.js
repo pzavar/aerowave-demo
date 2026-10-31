@@ -32,19 +32,34 @@
   function launchChat() {
     var bootstrap = window.embeddedservice_bootstrap;
     var api = bootstrap && bootstrap.utilAPI;
-    if (!api || typeof api.launchChat !== 'function') return;
+    if (!api || typeof api.launchChat !== 'function') return null;
     try {
-      var result = api.launchChat();
       // launchChat returns a Promise that rejects if the chat is busy or already open.
-      if (result && typeof result.catch === 'function') result.catch(function () {});
-    } catch (e) {}
+      return Promise.resolve(api.launchChat()).catch(function () {});
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setNewChatBusy(busy) {
+    var buttons = document.querySelectorAll('[data-new-chat]');
+    for (var i = 0; i < buttons.length; i++) {
+      if (busy) buttons[i].setAttribute('aria-busy', 'true');
+      else buttons[i].removeAttribute('aria-busy');
+    }
   }
 
   // End the current chat and open a fresh one, the same way the widget's
   // own reset-and-relaunch does.
   function startNewChat() {
     var cleared = clearChatSession();
-    if (cleared) cleared.then(launchChat);
+    if (!cleared) return;
+    setNewChatBusy(true);
+    var idle = function () { setNewChatBusy(false); };
+    // If Salesforce never answers, launchChat never settles. Re-enable the
+    // button anyway so it can be tried again.
+    setTimeout(idle, 20000);
+    cleared.then(launchChat).then(idle, idle);
   }
 
   // Demo helper: ?reset ends any existing chat once the widget is ready, then
@@ -62,8 +77,9 @@
 
   document.addEventListener('click', function (event) {
     var target = event.target;
-    var button = target && target.closest ? target.closest('[data-launch-chat]') : null;
-    if (button) launchChat();
+    if (!target || !target.closest) return;
+    if (target.closest('[data-launch-chat]')) launchChat();
+    else if (target.closest('[data-new-chat]')) startNewChat();
   });
 
   // Demo helper: Alt+Shift+N (Option+Shift+N on Mac) ends the chat and opens

@@ -29,7 +29,8 @@ The chat buttons open the widget once it has loaded. Before that they do nothing
 
 **Starting a fresh chat:** the widget keeps its session in Salesforce's own storage as well as this site's, so clearing site data doesn't reset it. Use either of these instead:
 
-- Press **Alt+Shift+N** (**Option+Shift+N** on Mac) to end the current chat and open a new one right away. Click somewhere on the page first, because keys typed inside the chat window don't reach the page.
+- Click **New chat** in the header to end the current chat and open a new one right away, without reloading the page.
+- Or press **Alt+Shift+N** (**Option+Shift+N** on Mac). Click somewhere on the page first, because keys typed inside the chat window don't reach the page.
 - Visit the page with `?reset` to end any existing chat and load the page with the chat closed, ready for the next recording.
 
 ## Deploy
