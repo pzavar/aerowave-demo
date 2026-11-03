@@ -25,7 +25,7 @@ Then open http://localhost:8000. The chat widget only loads when the page is ser
 1. Paste your Embedded Messaging code snippet where `<!-- SALESFORCE EMBEDDED MESSAGING SNIPPET GOES HERE -->` appears in `index.html`.
 2. In Salesforce, add each domain that serves the page (for example `http://localhost:8000` and your Netlify URL) to the CORS allowlist and to the deployment's trusted domains.
 
-The chat buttons open the widget once it has loaded. Before that they do nothing, and the widget's own launcher in the bottom-right corner still works.
+The chat buttons open the widget, dimming until the chat window appears. A click before the widget has finished loading opens the chat as soon as it's ready.
 
 **Starting a fresh chat:** the widget keeps its session in Salesforce's own storage as well as this site's, so clearing site data doesn't reset it. Use either of these instead:
 

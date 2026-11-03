@@ -99,6 +99,7 @@ a:hover { color: var(--navy); }
 .btn-primary:hover { background: var(--blue-dark); }
 .btn-primary:active { transform: translateY(1px); }
 .btn-primary:focus-visible { box-shadow: var(--focus); border-radius: 10px; }
+.btn[aria-busy="true"] { opacity: .7; cursor: progress; }
 .btn-icon { width: 20px; height: 20px; flex: none; }
 
 .text-link { font-weight: 600; color: var(--blue-dark); }

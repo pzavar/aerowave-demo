@@ -27,6 +27,12 @@
     }
   }
 
+  // The widget's API exists before it's usable: launchChat rejects until the
+  // ready event fires. Track that so an early click can wait for it.
+  var ready = false;
+  var launchQueued = false;
+  var resetCleared = null;
+
   // Open the Salesforce chat if the widget has loaded. Otherwise do nothing:
   // the widget's own launcher still works once it appears.
   function launchChat() {
@@ -41,12 +47,41 @@
     }
   }
 
-  function setNewChatBusy(busy) {
-    var buttons = document.querySelectorAll('[data-new-chat]');
+  function setBusy(selector, busy) {
+    var buttons = document.querySelectorAll(selector);
     for (var i = 0; i < buttons.length; i++) {
       if (busy) buttons[i].setAttribute('aria-busy', 'true');
       else buttons[i].removeAttribute('aria-busy');
     }
+  }
+
+  // Salesforce takes a few seconds to start a conversation before the chat
+  // window appears, so show the buttons as busy until it does. A click before
+  // the widget is ready opens the chat once it is, instead of being dropped.
+  function openChat() {
+    var idle = function () { setBusy('[data-launch-chat]', false); };
+    setBusy('[data-launch-chat]', true);
+    // launchChat never settles if Salesforce never answers, and the widget
+    // may never load, so don't leave the buttons busy forever.
+    setTimeout(function () {
+      launchQueued = false;
+      idle();
+    }, 20000);
+    if (!ready) {
+      launchQueued = true;
+      return;
+    }
+    var launched = launchChat();
+    if (launched) launched.then(idle, idle);
+    else idle();
+  }
+
+  function flushQueuedLaunch() {
+    if (!launchQueued) return;
+    launchQueued = false;
+    var idle = function () { setBusy('[data-launch-chat]', false); };
+    // With ?reset, open the fresh chat once the old one has been cleared.
+    Promise.resolve(resetCleared).then(launchChat).then(idle, idle);
   }
 
   // End the current chat and open a fresh one, the same way the widget's
@@ -54,8 +89,8 @@
   function startNewChat() {
     var cleared = clearChatSession();
     if (!cleared) return;
-    setNewChatBusy(true);
-    var idle = function () { setNewChatBusy(false); };
+    setBusy('[data-new-chat]', true);
+    var idle = function () { setBusy('[data-new-chat]', false); };
     // If Salesforce never answers, launchChat never settles. Re-enable the
     // button anyway so it can be tried again.
     setTimeout(idle, 20000);
@@ -68,17 +103,24 @@
     window.addEventListener('onEmbeddedMessagingReady', function onReady() {
       // Clearing re-fires the ready event, so stop listening first.
       window.removeEventListener('onEmbeddedMessagingReady', onReady);
-      clearChatSession();
+      resetCleared = clearChatSession();
     });
     try {
       window.history.replaceState(null, '', window.location.pathname + window.location.hash);
     } catch (e) {}
   }
 
+  // Registered after the ?reset listener so a reset starts before a queued
+  // launch. The event fires again after each clear; ready stays true.
+  window.addEventListener('onEmbeddedMessagingReady', function () {
+    ready = true;
+    flushQueuedLaunch();
+  });
+
   document.addEventListener('click', function (event) {
     var target = event.target;
     if (!target || !target.closest) return;
-    if (target.closest('[data-launch-chat]')) launchChat();
+    if (target.closest('[data-launch-chat]')) openChat();
     else if (target.closest('[data-new-chat]')) startNewChat();
   });
 
