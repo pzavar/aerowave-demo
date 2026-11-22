@@ -4,6 +4,8 @@ A single-page help center for **Aerowave Airlines**, a fictional airline. It exi
 
 The page is plain HTML, CSS, and vanilla JavaScript, with no framework and no build step.
 
+**Live site:** [pzavar.github.io/aerowave-demo](https://pzavar.github.io/aerowave-demo/) · **Agent and Salesforce metadata:** [pzavar/aerowave-claims-concierge](https://github.com/pzavar/aerowave-claims-concierge)
+
 ## What's here
 
 | File | Purpose |
